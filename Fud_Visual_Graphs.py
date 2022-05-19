@@ -6,6 +6,8 @@ import pandas as pd
 from nltk.corpus import stopwords #This is used to remove commpon keywords from tweet text while calculating the Word frequency count
 from dash import Dash, dcc, html, Input, Output #To plot the Graph figures
 import plotly.express as px #To plot the Graph figures
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 #==============================To PLOT BAR CHARTS OF MOST COMMON USED HASHTAGS IN EACH SENTIMENT CATEGORY=============#
 
