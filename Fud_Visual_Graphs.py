@@ -183,7 +183,13 @@ def get_bar_chart_neu():
         style={'width': '33%', 'height': '60vh', 'display': 'inline-block'})
     return barChart_neu
 
+import webbrowser
+from threading import Timer
+
 app = Dash(__name__)
+port = 5000
+def open_browser():
+    webbrowser.open_new("http://localhost:{}".format(port))
 # ======================== App Layout
 app.layout = html.Div([
     html.H1('Tweets Sentiment Analytics Dashboard', style={'text-align': 'center', 'background-color': '#d3d3d3'}),
@@ -194,4 +200,5 @@ app.layout = html.Div([
     get_multi_line_graph()
 ])
 if __name__ == '__main__':
-    app.run_server()
+    Timer(4, open_browser).start();
+    app.run_server(debug=True, port=port)
