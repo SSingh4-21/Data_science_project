@@ -4,7 +4,6 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import Fud_Fetch_DB_data as dbdf
 import re
 import pandas as pd
-import matplotlib.pyplot as plt
 import sqlite3
 
 def cleanTxt(text):
