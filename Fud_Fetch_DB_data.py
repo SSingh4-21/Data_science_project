@@ -3,7 +3,7 @@ import sqlite3
 def fn_get_DB_data(sqlquery):
    #path = input("Enter the Local path of the DB file:") + "\lboro_lab.db"## Kindly put the correct path of the Copied DB file   
    try:
-      path = r"D:\lboro work\lboro_lab.db"## Kindly put the correct path of the Copied DB file
+      path = r"lboro_lab.db"## Kindly put the correct path of the Copied DB file
       db = sqlite3.connect(path)
       c = db.cursor()
       c.execute(sqlquery)

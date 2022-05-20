@@ -14,7 +14,7 @@ def fetch_tweets_data_scn(keywords,start_Date,end_Date,total_tweets,del_flag):
  todaydatetime = dt.datetime.today()
  todaydate = dt.date.today()
  log_text = "Process starting datetime         :" + str(todaydatetime) + "\n"
- log_file_name = r"D:\lboro work\Process_log"+ "_" + str(todaydate) + ".txt"
+ log_file_name = r"Process_log"+ "_" + str(todaydate) + ".txt"
  f = open(log_file_name, "a")
  f.write("===================================================================\n")
  f.write("Keywords  :"+ keywords + "\n")
@@ -43,7 +43,7 @@ def fetch_tweets_data_scn(keywords,start_Date,end_Date,total_tweets,del_flag):
  tweets_df = df.replace("'"," ", regex=True)#Data Cleaning to make it compatible with SQLite3 insert
  
  ##SQLITE3 DATABASE CONNECTION IN ORDER TO INSERT THE TWEET DATA
- path = r"D:\lboro work\lboro_lab.db"
+ path = r"lboro_lab.db"
  conn = sqlite3.connect(path)
  cursor = conn.cursor()
  

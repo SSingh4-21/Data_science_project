@@ -37,7 +37,7 @@ def sentiment_scores():
     df['compound'] = [analyzer.polarity_scores(x)['compound'] for x in df['Tweet_Content']]    
 
     ##SQLITE3 DATABASE CONNECTION IN ORDER TO INSERT THE TWEET DATA
-    path = r"D:\lboro work\lboro_lab.db"
+    path = r"lboro_lab.db"
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
 
