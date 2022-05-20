@@ -13,15 +13,20 @@ def cleanTxt(text):
     text = re.sub(r'http?:\/\/S+','',text) #remove Http links
     return text
 
-def sentiment_scores(sentence):
+def sentiment_scores():
 # Create a SentimentIntensityAnalyzer object.
     analyzer = SentimentIntensityAnalyzer()
 # polarity_scores method of SentimentIntensityAnalyzer
 # object gives a sentiment dictionary.
-    sql_query = "select Tweet_id, Tweet_Content from Tweets_Raw_Data where length(location) > 0 "
-    print(sql_query)
+    sql_query = """select a.Tweet_id as Tweet_id, a.Tweet_Content as Tweet_Content from Tweets_Raw_Data a where length(location) > 0
+                and a.Tweet_ID not in (select b.Tweet_id from Tweets_Sentiment_Data b) """
+    
     data = dbdf.fn_get_DB_data(sql_query)
     print("Total Fetched Tweets Data Size:" + str(len(data))) 
+
+    if len(data)== 0:
+        print('No New Tweet Raw Data Available to process')
+        exit()
 
     df = pd.DataFrame(data, columns=['Tweet_id','Tweet_Content'])
 
@@ -45,9 +50,10 @@ def sentiment_scores(sentence):
          ##Exception handling in case of error received while inserting. 
          print(e)
     conn.commit()
-    conn.close()   
+    conn.close()
+    print("Sentiment Analysis Completed for total Tweets:" + str(len(df)))    
 
 # Driver code
 if __name__ == "__main__" :
     # function calling
-    sentiment_scores("")
+    sentiment_scores()
