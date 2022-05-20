@@ -18,7 +18,7 @@ def sentiment_scores(sentence):
     analyzer = SentimentIntensityAnalyzer()
 # polarity_scores method of SentimentIntensityAnalyzer
 # object gives a sentiment dictionary.
-    sql_query = "select Tweet_id, Tweet_Content from Tweets_id_Data where length(location) > 0 "
+    sql_query = "select Tweet_id, Tweet_Content from Tweets_Raw_Data where length(location) > 0 "
     print(sql_query)
     data = dbdf.fn_get_DB_data(sql_query)
     print("Total Fetched Tweets Data Size:" + str(len(data))) 
@@ -39,7 +39,7 @@ def sentiment_scores(sentence):
 
     try:
          for row in df.itertuples():         
-             insert_sql = f"insert into Tweets_Sentiment_Data_Vader (Tweet_ID, Clean_Tweet_text, neg, neu, pos, compound) values ('{row[1]}','{row[2]}','{row[3]}','{row[4]}','{row[5]}','{row[6]}')"
+             insert_sql = f"insert into Tweets_Sentiment_Data (Tweet_ID, Clean_Tweet_text, neg, neu, pos, compound) values ('{row[1]}','{row[2]}','{row[3]}','{row[4]}','{row[5]}','{row[6]}')"
              cursor.execute(insert_sql)
     except Exception as e:
          ##Exception handling in case of error received while inserting. 
