@@ -11,7 +11,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 #==============================To PLOT BAR CHARTS OF MOST COMMON USED HASHTAGS IN EACH SENTIMENT CATEGORY=============#
 
-##Dynamic Query Built to fetch Vader Sentiment processed data from DB table TWEETS_SENTIMENT_DATA_VADER
+##Dynamic Query Built to fetch Vader Sentiment processed data from DB table Tweets_Sentiment_Data
 sql_query = "SELECT  DISTINCT A.Tweet_id, B.TWEET_CONTENT, SUBSTR(POSTDATE,1,7) AS TWEET_MONTH, COMPOUND, " 
 sql_query = sql_query + " CASE WHEN UPPER(LOCATION) LIKE '%USA%' OR UPPER(LOCATION) LIKE '%UNITED%STATES%' OR UPPER(LOCATION) LIKE '%NEW%YORK%' THEN 'USA' "
 sql_query = sql_query + " WHEN UPPER(LOCATION) LIKE '%ENGLAND%' OR UPPER(LOCATION) LIKE '%UK' OR UPPER(LOCATION) LIKE '%LONDON%' THEN 'UK' "
@@ -20,7 +20,7 @@ sql_query = sql_query + " CASE WHEN COMPOUND >= 0.05   THEN 'Positive' "
 sql_query = sql_query + "     WHEN COMPOUND  <= -0.05 THEN 'Negative' "
 sql_query = sql_query + "	 ELSE 'Neutral' "
 sql_query = sql_query + " END AS ANALYSIS "
-sql_query = sql_query + " FROM TWEETS_SENTIMENT_DATA_VADER A,TWEETS_ID_DATA B "
+sql_query = sql_query + " FROM Tweets_Sentiment_Data A,Tweets_Raw_Data B "
 sql_query = sql_query + " WHERE A.TWEET_ID = B.TWEET_ID "
 #sql_query = sql_query + " AND ((UPPER(LOCATION) LIKE '%USA%' OR UPPER(LOCATION) LIKE '%UNITED%STATES%' OR UPPER(LOCATION) LIKE '%NEW%YORK%') OR(UPPER(LOCATION) LIKE '%ENGLAND%' OR UPPER(LOCATION) LIKE '%UK' OR UPPER(LOCATION) LIKE '%LONDON%') OR(UPPER(LOCATION) LIKE '%INDIA%')) "
 
@@ -72,11 +72,11 @@ import plotly.graph_objs as go
 
 #==============================To PLOT LINE CHARTS OF EACH SENTIMENT CATEGORY VS EACH MONTH=============#
 
-##Dynamic Query Built to fetch Vader Sentiment processed data from DB table TWEETS_SENTIMENT_DATA_VADER
+##Dynamic Query Built to fetch Vader Sentiment processed data from DB table Tweets_Sentiment_Data
 sql_query = "WITH Q1 AS ( "
 sql_query = sql_query + " SELECT  DISTINCT A.TWEET_ID, A.CLEAN_TWEET_TEXT, A.COMPOUND, SUBSTR(POSTDATE,1,7) AS TWEET_MONTH, "
 sql_query = sql_query + " CASE WHEN COMPOUND >= 0.05 THEN 'POSITIVE' WHEN COMPOUND  <= -0.05 THEN 'NEGATIVE' ELSE 'NEUTRAL' END AS ANALYSIS "
-sql_query = sql_query + " FROM TWEETS_SENTIMENT_DATA_VADER A,TWEETS_ID_DATA B "
+sql_query = sql_query + " FROM Tweets_Sentiment_Data A,Tweets_Raw_Data B "
 sql_query = sql_query + " WHERE A.TWEET_ID = B.TWEET_ID) "
 sql_query = sql_query + " SELECT SUM(CASE WHEN ANALYSIS = 'POSITIVE' THEN 1 ELSE 0 END) AS Positive, "
 sql_query = sql_query + " SUM(CASE WHEN ANALYSIS = 'NEGATIVE' THEN 1 ELSE 0 END) AS Negative, "
@@ -129,7 +129,7 @@ fig_multi =  go.Figure(data = data_multi, layout=layout)
 
 #==============================To PLOT PIE CHART FOR EACH SENTIMENT CATEGORY=============#
 
-sql_query = "with q1 as (select tweet_id,compound, case when compound >= 0.05 then 'Positive' when compound  <= -0.05 then 'Negative' else 'Neutral' end as Sentiment from Tweets_Sentiment_Data_Vader) "
+sql_query = "with q1 as (select tweet_id,compound, case when compound >= 0.05 then 'Positive' when compound  <= -0.05 then 'Negative' else 'Neutral' end as Sentiment from Tweets_Sentiment_Data) "
 sql_query = sql_query + " select count(1) as Tweets, Sentiment from q1 group by Sentiment order by 1 DESC "
 data = dbdf.fn_get_DB_data(sql_query)
 df_sentiment = pd.DataFrame(data, columns=['Tweets','Sentiment'])
