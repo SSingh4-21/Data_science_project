@@ -135,7 +135,8 @@ data = dbdf.fn_get_DB_data(sql_query)
 df_sentiment = pd.DataFrame(data, columns=['Tweets','Sentiment'])
 fig_pie = px.pie(df_sentiment, values='Tweets', names='Sentiment',
              title='Sentiments in Tweets',
-             hover_data=['Tweets'], labels={'Total Tweets':'Tweets'}, color='Sentiment',
+             #hover_data=['Tweets'], 
+             labels={'Total Tweets':'Tweets'}, color='Sentiment',
              color_discrete_map={'Positive':'rgb(10, 120, 24)','Negative':'rgb(205, 12, 24)','Neutral':'rgb(17, 157, 255)'})
 fig_pie.update_traces(textposition='inside', textinfo='percent+label')
 
