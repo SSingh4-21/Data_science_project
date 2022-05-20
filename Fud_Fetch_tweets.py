@@ -49,14 +49,14 @@ def fetch_tweets_data_scn(keywords,start_Date,end_Date,total_tweets,del_flag):
  
  ##Delete Flag to remove existing data and load new data
  if del_flag == "Y":
-     del_Str = "delete from Tweets_id_Data"
+     del_Str = "delete from Tweets_Raw_Data"
      cursor.execute(del_Str)
      conn.commit()
  
- ##High perfomrance methodlogy used to insert data into the database table Tweets_id_Data
+ ##High perfomrance methodlogy used to insert data into the database table Tweets_Raw_Data
  try:
      for row in tweets_df.itertuples():         
-         insert_sql = f"insert into Tweets_id_Data (Tweet_ID, Location, PostDate, Tweet_Content) values ('{row[1]}','{row[2]}','{str(row[3])[0:10]}','{row[4]}')"
+         insert_sql = f"insert into Tweets_Raw_Data (Tweet_ID, Location, PostDate, Tweet_Content) values ('{row[1]}','{row[2]}','{str(row[3])[0:10]}','{row[4]}')"
          cursor.execute(insert_sql)
      conn.commit()
      conn.close()
@@ -92,7 +92,7 @@ def main():
     No_of_months_str = input("Please Enter Total Months to be Processed :")
     Tweets_fetch_limit_str = input("Please Enter Total Tweets to be Fetched :")
     
-    df = dbdf.fn_get_DB_data("select * from TWEETS_ID_DATA")
+    df = dbdf.fn_get_DB_data("select * from Tweets_Raw_Data")
     before_count = len(df)    
     print("Total Tweets Data Size Before Processing:" + str(len(df)))
     
@@ -161,7 +161,7 @@ def main():
     pbar.close()
     print(Status)        
     
-    df = dbdf.fn_get_DB_data("select * from TWEETS_ID_DATA")
+    df = dbdf.fn_get_DB_data("select * from Tweets_Raw_Data")
     after_count = len(df)
     print("Total Loaded Tweets Data Size with current run:" + str(after_count - before_count))    
 
