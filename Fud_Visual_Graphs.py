@@ -150,12 +150,13 @@ layout = go.Layout(
 
 def get_pie_graph():
     pie_graph = dcc.Graph(figure=fig_pie,
-        style={'width': '30%', 'display': 'inline-block'})
+        style={'width': '30%','height': '60vh', 'display': 'inline-block'})
     return pie_graph 
 
 def get_multi_line_graph():
-    multi_line_graph = dcc.Graph(figure=go.Figure(data = data_multi, layout=layout),
-        style={'width': '70%', 'display': 'inline-block'})
+    multi_line_graph = dcc.Graph(figure=go.Figure(data = data_multi, layout=layout).update_layout(
+        title='Tweets Sentiment Month Wise'),
+        style={'width': '70%','height': '60vh', 'display': 'inline-block'})
     return multi_line_graph
 
 
