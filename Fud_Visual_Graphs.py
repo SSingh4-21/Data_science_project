@@ -37,7 +37,7 @@ df['tweet_without_stopwords'] = df['tweet_without_stopwords'].str.replace(' amp 
 
 df['tweet_without_stopwords'] = df['tweet_without_stopwords'].str.replace('-','').str.replace('.','').str.replace(',','').str.replace(':','')
 df['tweet_without_stopwords'] = df['tweet_without_stopwords'].str.replace('?','').str.replace('COVID_19','').str.replace('COVID-19','').str.replace('COVID19','').str.replace('COVID','').str.replace('CORONAVIRUS','')
-df['tweet_without_stopwords'] = df['tweet_without_stopwords'].str.replace('ー19','')
+df['tweet_without_stopwords'] = df['tweet_without_stopwords'].str.replace('ー19','').str.replace('#__19','')
 
 stop = stopwords.words('english')
 df['tweet_without_stopwords'] = df['tweet_without_stopwords'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
@@ -48,7 +48,7 @@ bar_df_pos = new_df_pos.tweet_without_stopwords.str.split(expand=True).stack().v
 bar_df_pos.columns = ['Word', 'Frequency']
 bar_df_pos = bar_df_pos[bar_df_pos['Word'].str.startswith('#') ]##PICK ONLY WORDS WITH HASHTAGS
 bar_df_pos = bar_df_pos[(bar_df_pos['Word'] != "#")]
-#fig_bar_pos = px.bar(new_df[1:50], x='Word', y='Frequency', title='Most Words Frequency In Postive Tweets')
+bar_df_pos = bar_df_pos[(bar_df_pos['Word'] !="#חינוך")]
 
 ######  NEGATIVE SENTIMENT GRAPHS DF
 new_df_neg = df[df['ANALYSIS']== "Negative"]
@@ -56,7 +56,7 @@ bar_df_neg = new_df_neg.tweet_without_stopwords.str.split(expand=True).stack().v
 bar_df_neg.columns = ['Word', 'Frequency']
 bar_df_neg = bar_df_neg[bar_df_neg['Word'].str.startswith('#') ]
 bar_df_neg = bar_df_neg[(bar_df_neg['Word'] != "#")]
-#fig_bar_neg = px.bar(new_df[1:50], x='Word', y='Frequency', title='Most Words Frequency In Negative Tweets')
+bar_df_neg = bar_df_neg[(bar_df_neg['Word'] !="#!")]
 
 ######  NEUTRAL SENTIMENT GRAPHS DF
 new_df_neu = df[df['ANALYSIS']== "Neutral"]
@@ -64,7 +64,6 @@ bar_df_neu = new_df_neu.tweet_without_stopwords.str.split(expand=True).stack().v
 bar_df_neu.columns = ['Word', 'Frequency']
 bar_df_neu = bar_df_neu[bar_df_neu['Word'].str.startswith('#') ]
 bar_df_neu = bar_df_neu[(bar_df_neu['Word'] != "#")]
-#fig_bar_neu = px.bar(bar_df_neu[1:50], x='Word', y='Frequency', title='Most Words Frequency In Neutral Tweets')
 
 
 # ======================== Plotly Graphs
